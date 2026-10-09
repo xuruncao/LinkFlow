@@ -1,0 +1,176 @@
+// 全局设计令牌 + Element Plus 主题覆盖
+// 主色：靛蓝（投放/数据类产品常用的冷静、可信色）；辅色：青绿（数据正向）、琥珀（提醒）
+:root {
+  --sl-primary: #4f46e5;
+  --sl-primary-hover: #4338ca;
+  --sl-primary-soft: #eef0ff;
+  --sl-accent: #14b8a6;
+  --sl-warning: #f59e0b;
+  --sl-danger: #ef4444;
+
+  --sl-bg: #f5f7fb;
+  --sl-surface: #ffffff;
+  --sl-border: #e6e9f0;
+  --sl-border-soft: #eff1f6;
+
+  --sl-text: #0f172a;
+  --sl-text-2: #475569;
+  --sl-text-3: #94a3b8;
+
+  --sl-radius: 12px;
+  --sl-radius-sm: 8px;
+  --sl-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 16px rgba(15, 23, 42, 0.04);
+  --sl-shadow-lg: 0 12px 40px rgba(15, 23, 42, 0.12);
+
+  --sl-header-h: 60px;
+  --sl-font: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+  --sl-mono: 'JetBrains Mono', 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
+
+  // Element Plus 主色阶（light-N = 与白色按 N*10% 混合）
+  --el-color-primary: #4f46e5;
+  --el-color-primary-light-3: #847eed;
+  --el-color-primary-light-5: #a7a3f2;
+  --el-color-primary-light-7: #cbc8f7;
+  --el-color-primary-light-8: #d6d3fa;
+  --el-color-primary-light-9: #edecfc;
+  --el-color-primary-dark-2: #3f38b7;
+
+  --el-border-radius-base: 8px;
+  --el-border-radius-small: 6px;
+  --el-border-color: #e2e6ee;
+  --el-border-color-light: #e6e9f0;
+  --el-border-color-lighter: #eff1f6;
+  --el-text-color-primary: #0f172a;
+  --el-text-color-regular: #475569;
+  --el-text-color-secondary: #94a3b8;
+  --el-font-family: var(--sl-font);
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+body {
+  font-family: var(--sl-font);
+  font-size: 14px;
+  color: var(--sl-text);
+  background: var(--sl-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--el-color-primary-light-8);
+}
+
+// 滚动条
+::-webkit-scrollbar-track-piece {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 116, 139, 0.25);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(100, 116, 139, 0.45);
+}
+
+// ---------- Element Plus 组件微调 ----------
+.el-button {
+  font-weight: 500;
+}
+
+.el-button--primary {
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.22);
+}
+
+.el-button--primary.is-plain {
+  box-shadow: none;
+}
+
+.el-input__wrapper,
+.el-textarea__inner,
+.el-select .el-input__wrapper {
+  box-shadow: 0 0 0 1px var(--el-border-color) inset;
+  transition: box-shadow 0.2s;
+}
+
+.el-input__wrapper.is-focus,
+.el-textarea__inner:focus {
+  box-shadow:
+    0 0 0 1px var(--el-color-primary) inset,
+    0 0 0 4px rgba(79, 70, 229, 0.12) !important;
+}
+
+.el-dialog {
+  border-radius: 16px;
+  box-shadow: var(--sl-shadow-lg);
+  overflow: hidden;
+
+  .el-dialog__header {
+    margin-right: 0;
+    padding: 20px 24px 12px;
+  }
+
+  .el-dialog__title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--sl-text);
+  }
+
+  .el-dialog__body {
+    padding: 12px 24px 20px;
+  }
+
+  .el-dialog__footer {
+    padding: 0 24px 20px;
+  }
+}
+
+.el-table {
+  --el-table-header-bg-color: #f8fafc;
+  --el-table-row-hover-bg-color: #f7f7ff;
+  --el-table-border-color: var(--sl-border-soft);
+  --el-table-header-text-color: #64748b;
+
+  th.el-table__cell {
+    font-size: 13px;
+    font-weight: 500;
+  }
+}
+
+.el-tabs__item {
+  font-weight: 500;
+}
+
+.el-dropdown-menu__item {
+  padding: 8px 16px;
+}
+
+.el-popper.is-dark {
+  border-radius: 6px;
+}
+
+.el-pagination {
+  --el-pagination-button-bg-color: transparent;
+}
+
+.el-message {
+  border-radius: 10px;
+  box-shadow: var(--sl-shadow-lg);
+}
+
+// 无障碍：键盘焦点可见
+:focus-visible {
+  outline: 2px solid var(--el-color-primary-light-5);
+  outline-offset: 2px;
+}

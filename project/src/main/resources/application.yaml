@@ -1,0 +1,74 @@
+server:
+  port: 8001
+
+spring:
+  application:
+    name: short-link-project
+  datasource:
+    driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
+    url: jdbc:shardingsphere:classpath:shardingsphere-config-${database.env:dev}.yaml
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password: 123456
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .html
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+rocketmq:
+  name-server: ${ROCKETMQ_NAME_SERVER:127.0.0.1:9876}
+  producer:
+    group: short-link-stats-producer
+    # 统计消息改为异步发送后，跳转不再被应答阻塞；这里把超时压到 1500ms，
+    # 让 broker 抖动时更快进入补偿队列重投，而不是让发送任务长时间占着异步线程
+    send-message-timeout: 1500
+    retry-times-when-send-failed: 2
+    retry-times-when-send-async-failed: 1
+
+short-link:
+  domain:
+    default: 127.0.0.1:8001
+  stats:
+    locale:
+      amap-key: ${AMAP_KEY:}
+    producer:
+      # 是否异步发送统计消息。false 时退回同步发送（仅用于同代码双跑对照），
+      # 同步失败同样只补偿、不阻断跳转
+      async-enabled: true
+      async-core-pool-size: 4
+      async-max-pool-size: 8
+      # 异步发送等待队列容量，打满后消息直接转入补偿队列
+      async-queue-capacity: 2000
+      compensation:
+        enabled: true
+        # 补偿队列长度上限，超出后丢弃最旧消息，避免队列无限增长
+        max-size: 100000
+        drain-batch-size: 200
+        # 单条消息两次重投之间至少间隔 30s，避免同一批消息每个周期被全量重投
+        replay-cooldown-millis: 30000
+        drain-delay-millis: 5000
+        drain-lock-wait-millis: 100
+      # broker 持续不可用时熔断，只入补偿队列不再发起发送尝试，避免重试风暴
+      circuit-breaker:
+        enabled: true
+        failure-threshold: 20
+        open-millis: 10000
+  goto-domain:
+    white-list:
+      enable: true
+      names: '知乎,掘金,博客园'
+      details:
+        - zhihu.com
+        - juejin.cn
+        - cnblogs.com
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mapper/*.xml

@@ -1,0 +1,14 @@
+database:
+  env: local
+
+spring:
+  cloud:
+    discovery:
+      enabled: false
+    nacos:
+      discovery:
+        enabled: false
+
+short-link:
+  domain:
+    default: 127.0.0.1:8003

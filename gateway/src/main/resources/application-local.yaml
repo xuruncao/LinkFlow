@@ -1,0 +1,26 @@
+spring:
+  cloud:
+    discovery:
+      enabled: false
+    nacos:
+      discovery:
+        enabled: false
+    gateway:
+      routes:
+        - id: short-link-admin-local
+          uri: http://127.0.0.1:8003
+          predicates:
+            - Path=/api/short-link/admin/**
+          filters:
+            - name: TokenValidate
+              args:
+                whitePathList:
+                  - /api/short-link/admin/v1/user/login
+                  - /api/short-link/admin/v1/user/has-username
+
+        - id: short-link-project-local
+          uri: http://127.0.0.1:8003
+          predicates:
+            - Path=/api/short-link/**
+          filters:
+            - name: TokenValidate

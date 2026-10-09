@@ -1,0 +1,40 @@
+LinkFlow
+Copyright 2026 xuruncao and contributors
+
+This product is a derivative work based on the open source project:
+
+    shortlink
+    Copyright the shortlink project contributors (nageoffer / 马丁玩编程)
+    https://github.com/nageoffer/shortlink
+    Licensed under the Apache License, Version 2.0
+
+The upstream project provides the base SaaS short-link system (admin console API,
+short-link project service, gateway, aggregation entry, Vue console). This repository
+is an independent, modified distribution of that work and is not affiliated with,
+endorsed by, or maintained by the upstream author.
+
+Modifications made in this repository relative to the upstream baseline
+(see README.md and IMPROVEMENTS.md for details and evidence):
+
+  * Access statistics pipeline redesigned: the Redis Stream based pipeline was
+    replaced with an Apache RocketMQ based one (idempotent consumption,
+    backlog and duplicate-delivery behaviour measured and documented).
+  * Two-level click attribution added: channel (utm_source) and campaign
+    (utm_campaign) dimensions are captured, normalised, stored in a dedicated
+    pre-aggregated table and exposed through the statistics APIs.
+  * Redirect availability hardening: statistics messages are produced
+    asynchronously with a bounded compensation queue and a circuit breaker, so a
+    failing or unavailable broker no longer affects the redirect response.
+  * Reproducible local development environment (no Docker/Nacos required) and a
+    JMeter based load-testing setup with archived results and documented limits.
+  * Rebranding and clean-up: package namespace renamed to com.linkflow.shortlink,
+    build metadata, documentation and console branding unified under LinkFlow,
+    third-party and upstream promotional material removed from the source tree.
+
+Upstream copyright, attribution and license notices are retained. Modified Java source files in this
+repository carry a notice
+stating that they were changed, as required by section 4(b) of the Apache
+License, Version 2.0.
+
+Third-party dependencies are licensed under their own terms; see the respective
+project's license and the dependency declarations in the Maven and npm manifests.

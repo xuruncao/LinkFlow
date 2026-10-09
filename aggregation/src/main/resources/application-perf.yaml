@@ -1,0 +1,28 @@
+database:
+  env: perf
+
+rocketmq:
+  producer:
+    group: short-link-stats-producer-perf
+    send-message-timeout: 1000
+    retry-times-when-send-failed: 1
+    retry-times-when-send-async-failed: 1
+    retry-next-server: true
+    max-message-size: 1048576
+    enable-msg-trace: false
+
+short-link:
+  flow-limit:
+    enable: false
+  stats:
+    consumer:
+      enabled: false
+    mq:
+      topic: short-link-stats-perf
+      consumer-group: short-link-stats-consumer-perf
+    locale:
+      mock-enabled: true
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
